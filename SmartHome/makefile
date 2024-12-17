@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Iinclude
 LDFLAGS = -lsqlite3 -lssl -lcrypto -lpthread
 
-SRC = $(wildcard DeviceManager/*.cpp) $(wildcard UserManager/*.cpp) $(wildcard DataBaseManager/*.cpp) main.cpp
+SRC = $(wildcard MenuManager/*.cpp) $(wildcard DeviceManager/*.cpp) $(wildcard UserManager/*.cpp) $(wildcard DataBaseManager/*.cpp) $(wildcard LogManager/*.cpp) main.cpp
 OBJ = $(SRC:.cpp=.o)
 TARGET = main
 

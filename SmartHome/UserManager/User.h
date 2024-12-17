@@ -9,7 +9,8 @@
 #include <openssl/sha.h> // 用于密码哈希
 #include <sstream>        // 用于字符串流操作
 #include <iomanip>        // 用于格式化字符串输出
-#include "../DataBaseManager/DataBaseManager.h" // 包含数据库管理类的头文件
+#include "../DataBaseManager/DataBaseManager.h"
+#include <openssl/evp.h>
 
 // 定义User类，用于表示用户信息
 class User
@@ -23,9 +24,7 @@ public:
     };
 
     // 构造函数，初始化用户ID、用户名、密码哈希和角色
-    User(int id, const std::string &username, const std::string &password_hash, Role role)
-        : id(id), username(username), password_hash(password_hash),
-          role(role) {}
+    User(int id, const std::string &username, const std::string &password_hash, Role role) : id(id), username(username), password_hash(password_hash), role(role) {}
 
     // 获取用户ID
     int getId() const { return id; }
@@ -55,6 +54,18 @@ public:
 
     // 注册新用户，传入用户名、密码和角色，返回注册是否成功
     bool registerUser(const std::string &username, const std::string &password, const std::string &role);
+
+    // 删除用户，传入用户名，返回删除是否成功
+    bool deleteUser(const std::string &username);
+
+    // 修改用户信息，传入用户名返回修改是否成功
+    bool modifyUserName(const std::string &username, const std::string &new_username);
+
+    // 修改用户信息，传入用户密码返回修改是否成功
+    bool modifyUserPassword(const std::string &username, const std::string &new_password);
+
+    // 修改用户信息，传入用户角色返回修改是否成功
+    bool modifyUserRole(const std::string &username, const std::string &new_role);
 
     // 用户登录验证，传入用户名和密码，返回登录是否成功
     bool loginUser(const std::string &username, const std::string &password);

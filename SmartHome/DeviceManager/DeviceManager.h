@@ -32,6 +32,8 @@ public:
     const std::string &getStatus() const { return status; }
     // 设置设备状态
     void setStatus(const std::string &newStatus) { status = newStatus; }
+    // 设置设备信息 
+    void setInfo(const std::string &newInfo) { info = newInfo; }
     // 控制设备的虚函数，需要在派生类中实现
     virtual void control(const std::string &command) = 0;
     // 获取设备信息的虚函数，需要在派生类中实现
@@ -41,6 +43,7 @@ protected:
     int id;             // 设备ID
     DeviceType type;    // 设备类型
     std::string status; // 设备状态
+    std::string info;   // 设备信息
 };
 
 // 定义灯光类，继承自Device基类
@@ -50,18 +53,26 @@ public:
     // 构造函数，初始化灯光的ID和亮度
     Light(int id) : Device(id, DeviceType::Light), brightness(0) {}
     // 重写控制函数，处理灯光的开关和亮度调整
-    void control(const std::string &command) override {
-        if (command == "on") {
+    void control(const std::string &command) override
+    {
+        if (command == "on")
+        {
             setStatus("on");
-        } else if (command == "off") {
+        }
+        else if (command == "off")
+        {
             setStatus("off");
-        } else if (command.find("brightness") != std::string::npos) {
+        }
+        else if (command.find("brightness") != std::string::npos)
+        {
             brightness = std::stoi(command.substr(9));
             setStatus("adjusted");
+            setInfo("Light, Brightness: " + std::to_string(brightness));
         }
     }
     // 重写获取信息函数，返回灯光的详细信息
-    std::string getInfo() const override {
+    std::string getInfo() const override
+    {
         return "Light, Brightness: " + std::to_string(brightness);
     }
 
@@ -76,19 +87,28 @@ public:
     // 构造函数，初始化温控器的ID、当前温度和目标温度
     Thermostat(int id) : Device(id, DeviceType::Thermostat), currentTemperature(20), targetTemperature(20) {}
     // 重写控制函数，处理温控器的开关和目标温度设置
-    void control(const std::string &command) override {
-        if (command == "on") {
+    void control(const std::string &command) override
+    {
+        if (command == "on")
+        {
             setStatus("on");
-        } else if (command == "off") {
+        }
+        else if (command == "off")
+        {
             setStatus("off");
-        } else if (command.find("set") != std::string::npos) {
+        }
+        else if (command.find("set") != std::string::npos)
+        {
             targetTemperature = std::stoi(command.substr(4));
             setStatus("adjusted");
+            setInfo("Thermostat, Current Temperature: " + std::to_string(currentTemperature) +
+               ", Target Temperature: " + std::to_string(targetTemperature));
         }
     }
     // 重写获取信息函数，返回温控器的详细信息
-    std::string getInfo() const override {
-        return "Thermostat, Current Temperature: " + std::to_string(currentTemperature) + 
+    std::string getInfo() const override
+    {
+        return "Thermostat, Current Temperature: " + std::to_string(currentTemperature) +
                ", Target Temperature: " + std::to_string(targetTemperature);
     }
 
@@ -104,18 +124,26 @@ public:
     // 构造函数，初始化摄像头的ID和分辨率
     Camera(int id) : Device(id, DeviceType::Camera), resolution("1080p") {}
     // 重写控制函数，处理摄像头的开关和分辨率设置
-    void control(const std::string &command) override {
-        if (command == "on") {
+    void control(const std::string &command) override
+    {
+        if (command == "on")
+        {
             setStatus("on");
-        } else if (command == "off") {
+        }
+        else if (command == "off")
+        {
             setStatus("off");
-        } else if (command.find("resolution") != std::string::npos) {
+        }
+        else if (command.find("resolution") != std::string::npos)
+        {
             resolution = command.substr(11);
             setStatus("adjusted");
+            setInfo("Camera, Resolution: " + resolution);
         }
     }
     // 重写获取信息函数，返回摄像头的详细信息
-    std::string getInfo() const override {
+    std::string getInfo() const override
+    {
         return "Camera, Resolution: " + resolution;
     }
 
@@ -130,15 +158,21 @@ public:
     // 构造函数，初始化插座的ID
     Socket(int id) : Device(id, DeviceType::Socket) {}
     // 重写控制函数，处理插座的开关
-    void control(const std::string &command) override {
-        if (command == "on") {
+    void control(const std::string &command) override
+    {
+        if (command == "on")
+        {
             setStatus("on");
-        } else if (command == "off") {
+        }
+        else if (command == "off")
+        {
             setStatus("off");
         }
+        setInfo("Socket");
     }
     // 重写获取信息函数，返回插座的详细信息
-    std::string getInfo() const override {
+    std::string getInfo() const override
+    {
         return "Socket";
     }
 };
@@ -148,29 +182,34 @@ class DeviceFactory
 {
 public:
     // 静态方法，根据设备类型创建设备实例
-    static std::shared_ptr<Device> createDevice(int id, Device::DeviceType type) {
-        switch (type) {
-            case Device::DeviceType::Light:
-                return std::make_shared<Light>(id);
-            case Device::DeviceType::Thermostat:
-                return std::make_shared<Thermostat>(id);
-            case Device::DeviceType::Camera:
-                return std::make_shared<Camera>(id);
-            case Device::DeviceType::Socket:
-                return std::make_shared<Socket>(id);
-            default:
-                return nullptr;
+    static std::shared_ptr<Device> createDevice(int id, Device::DeviceType type)
+    {
+        switch (type)
+        {
+        case Device::DeviceType::Light:
+            return std::make_shared<Light>(id);
+        case Device::DeviceType::Thermostat:
+            return std::make_shared<Thermostat>(id);
+        case Device::DeviceType::Camera:
+            return std::make_shared<Camera>(id);
+        case Device::DeviceType::Socket:
+            return std::make_shared<Socket>(id);
+        default:
+            return nullptr;
         }
     }
 };
 
 // 定义设备管理类，用于管理所有设备
-class DeviceManager {
+class DeviceManager
+{
 public:
     // 构造函数，初始化设备管理器
     DeviceManager();
     // 析构函数，关闭数据库连接
     ~DeviceManager();
+    // 从数据库加载设备信息到设备管理器
+    void loadDevicesFromDB();
     // 添加设备到管理器
     void addDevice(const std::shared_ptr<Device> &device);
     // 根据设备ID移除设备
@@ -182,18 +221,19 @@ public:
     // 控制设备
     void controlDevice(int deviceId, const std::string &command);
     // 获取所有设备
-    std::vector<std::shared_ptr<Device>> getAllDevices() const;
-    // 批量控制设备
-    void batchControl(const std::string &command);
+    std::vector<std::shared_ptr<Device>> getAllDevices();
 
 private:
+    pthread_mutex_t dbMutex; // 数据库互斥锁
+    char *errMsg;
     std::map<int, std::shared_ptr<Device>> devices; // 存储所有设备的映射
-    sqlite3 *db;                                    // 数据库连接指针
+    sqlite3 *db;
 
     // 初始化数据库连接
     void initDB();
     // 关闭数据库连接
     void closeDB();
+    // 检查设备是否存在于数据库
     bool deviceExistsInDB(int deviceId);
     // 将设备插入到数据库
     void insertDeviceIntoDB(const std::shared_ptr<Device> &device);
@@ -201,11 +241,10 @@ private:
     void removeDeviceFromDB(int deviceId);
     // 更新数据库中的设备状态
     void updateDeviceStatusInDB(int deviceId, const std::string &newStatus);
-    // 在数据库中控制设备
-    void controlDeviceInDB(int deviceId, const std::string &command);
 };
 
-// 设备管理器菜单函数，用于与用户交互
-void DeviceManagerMenu(DeviceManager &deviceManager);
+void AdminDeviceManagerMenu(DeviceManager &deviceManager);
+
+void UserDeviceManagerMenu(DeviceManager &deviceManager);
 
 #endif // DEVICEMANAGER_H

@@ -1,0 +1,39 @@
+[2024-12-17 19:49:22] User: admin Message: 用户登录了系统
+[2024-12-17 19:49:56] User: admin Message: 用户登录了系统
+[2024-12-17 19:49:56] Message: jay被添加到系统中
+[2024-12-17 19:50:59] User: admin Message: 用户登录了系统
+[2024-12-17 19:50:59] Message: jay被添加到系统中
+[2024-12-17 19:50:59] Message: aaa从系统中删除
+[2024-12-17 19:52:18] User: admin Message: 用户登录了系统
+[2024-12-17 19:52:18] Message: jay被添加到系统中
+[2024-12-17 19:52:18] Message: aaa从系统中删除
+[2024-12-17 19:52:18] User: jay Message: 该用户名被修改为jack
+[2024-12-17 19:52:50] User: admin Message: 用户登录了系统
+[2024-12-17 19:52:50] Message: jay被添加到系统中
+[2024-12-17 19:52:50] Message: aaa从系统中删除
+[2024-12-17 19:52:50] User: jay Message: 该用户名被修改为jack
+[2024-12-17 19:52:50] User: jack Message: 该用户密码被修改为654321
+[2024-12-17 19:53:20] User: admin Message: 用户登录了系统
+[2024-12-17 19:53:20] Message: jay被添加到系统中
+[2024-12-17 19:53:20] Message: aaa从系统中删除
+[2024-12-17 19:53:20] User: jay Message: 该用户名被修改为jack
+[2024-12-17 19:53:20] User: jack Message: 该用户密码被修改为654321
+[2024-12-17 19:53:20] User: jack Message: 该用户角色被修改为Admin
+[2024-12-17 19:54:10] User: admin Message: 用户登录了系统
+[2024-12-17 19:54:10] Message: jay被添加到系统中
+[2024-12-17 19:54:10] Message: aaa从系统中删除
+[2024-12-17 19:54:10] User: jay Message: 该用户名被修改为jack
+[2024-12-17 19:54:10] User: jack Message: 该用户密码被修改为654321
+[2024-12-17 19:54:10] User: jack Message: 该用户角色被修改为Admin
+[2024-12-17 19:54:10] User: aaa Message: 用户注册了系统
+[2024-12-17 19:56:05] User: admin Message: 用户登录了系统
+[2024-12-17 19:56:05] Message: jay被添加到系统中
+[2024-12-17 19:56:05] Message: aaa从系统中删除
+[2024-12-17 19:56:05] User: jay Message: 该用户名被修改为jack
+[2024-12-17 19:56:05] User: jack Message: 该用户密码被修改为654321
+[2024-12-17 19:56:05] User: jack Message: 该用户角色被修改为Admin
+[2024-12-17 19:56:05] User: aaa Message: 用户注册了系统
+[2024-12-17 19:56:05] User: aaa Message: 用户登录了系统
+[2024-12-17 19:58:14] Message: bbb被添加到系统中
+[2024-12-17 19:58:52] Message: bbb被添加到系统中
+[2024-12-17 19:58:52] User: bbb Message: 用户登录了系统

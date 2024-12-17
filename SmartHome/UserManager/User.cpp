@@ -1,10 +1,6 @@
 #include "User.h"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <openssl/sha.h>
 
-UserManager::UserManager() : userIdCounter(1), dbManager("users.db")
+UserManager::UserManager() : userIdCounter(1), dbManager("DBPath/users.db")
 {
     if (!dbManager.connect())
     {
@@ -30,6 +26,46 @@ bool UserManager::registerUser(const std::string &username, const std::string &p
     std::string insertQuery = "INSERT INTO users (username, password_hash, role) VALUES ('" +
                               username + "', '" + passwordHash + "', '" + role + "');";
     if (!dbManager.executeQuery(insertQuery))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool UserManager::deleteUser(const std::string &username)
+{
+    std::string deleteQuery = "DELETE FROM users WHERE username = '" + username + "';";
+    if (!dbManager.executeQuery(deleteQuery))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool UserManager::modifyUserName(const std::string &username, const std::string &new_username) {
+    std::string modifyQuery = "UPDATE users SET username = '" + new_username + "' WHERE username = '" + username + "';";
+    if (!dbManager.executeQuery(modifyQuery))
+    {
+        return false;
+    }
+    return true;
+}
+
+
+bool UserManager::modifyUserPassword(const std::string &username, const std::string &password) {
+    std::string new_password;
+    std::string passwordHash = hashPassword(new_password);
+    std::string modifyQuery = "UPDATE users SET password_hash = '" + passwordHash + "' WHERE username = '" + username + "';";
+    if (!dbManager.executeQuery(modifyQuery))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool UserManager::modifyUserRole(const std::string &username, const std::string &new_role){
+    std::string modifyQuery = "UPDATE users SET role = '" + new_role + "' WHERE username = '" + username + "';";
+    if (!dbManager.executeQuery(modifyQuery))
     {
         return false;
     }
@@ -70,20 +106,38 @@ User* UserManager::getUser(int userId)
     return nullptr;
 }
 
-std::string UserManager::hashPassword(const std::string &password)
-{
+std::string UserManager::hashPassword(const std::string& password) {
     unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, password.c_str(), password.size());
-    SHA256_Final(hash, &sha256);
-    std::stringstream ss;
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-    {
-        ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+    if (mdctx == nullptr) {
+        return "";
     }
+
+    if (1 != EVP_DigestInit_ex(mdctx, EVP_sha256(), nullptr)) {
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    if (1 != EVP_DigestUpdate(mdctx, password.c_str(), password.size())) {
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    if (1 != EVP_DigestFinal_ex(mdctx, hash, nullptr)) {
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    EVP_MD_CTX_free(mdctx);
+
+    std::stringstream ss;
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
+        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash[i]);
+    }
+
     return ss.str();
 }
+
 
 bool UserManager::checkPasswordHash(const std::string &password, const std::string &hash)
 {
