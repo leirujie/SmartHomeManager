@@ -15,14 +15,12 @@ SmartHomeManager：
         ├── ConfigManager.h
         ├── ConfigManager.cpp
     ├── DataBaseManager  // 数据库管理模块
-        ├── CreatDataBase.h
-        ├── CreatDataBase.cpp
         ├── DataBaseManager.h
         ├── DataBaseManager.cpp
-        ├── SmartHome.db
+    ├── DBPath  // 数据库路径
+        ├── devices.db
+        ├── users.db
     ├── DeviceManager  // 设备管理模块
-        ├── Device.h
-        ├── Device.cpp
         ├── DeviceManager.h
         ├── DeviceManager.cpp
     ├── ExpectionManager  // 异常处理模块
@@ -31,28 +29,36 @@ SmartHomeManager：
     ├── LogManager  // 日志管理模块
         ├── Log.h
         ├── Log.cpp
-        ├── LogManager.h
-        ├── LogManager.cpp
-    ├── MultiThreadManager  // 线程池管理模块
+    ├── LogPath  // 日志路径
+        ├── UserAction.txt
+    ├── MenuManager  // 菜单管理模块
+        ├── ShowMenu.h
+        ├── ShowMenu.cpp
+    ├── ThreadManager  // 线程池管理模块
         ├── ThreadPool.h
         ├── ThreadPool.cpp
     ├── UserManager  // 用户管理模块
         ├── User.h
         ├── User.cpp
-        ├── UserManager.h
-        ├── UserManager.cpp
     ├── main.cpp // 程序运行主函数
     ├── makefile
+    ├── README.md
 ```
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  admin为管理员账号，密码为<root123>，登录后可以进行设备管理、用户管理、日志管理等操作.
+2.  普通用户账号密码需要自己注册，登录后可以查看设备状态、控制设备.
+3.  设备控制命令格式：on/off/bright/20.
+
+#### 完成进度
+
+1.  配置管理模块：未完成
+2.  数据库管理模块：完成
+3.  设备管理模块：完成2/3
+4.  异常处理模块：未完成
+5.  日志管理模块：完成1/3
+6.  菜单管理模块：完成
+7.  线程池管理模块：未完成
+8.  用户管理模块：完成，部分细节待完善
+9.  程序运行主函数：完成
